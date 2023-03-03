@@ -1,0 +1,109 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class p
+{
+private:
+	int degree;
+	// 최고차항
+	float coef[80];
+public:
+	p() { degree = 0; }
+	bool isZero() {
+		if (degree == 0)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	void negate() {
+		for (int i = 0; i <= degree; i++)
+		{
+			coef[i] = -coef[i];
+		}
+	}
+	void read() {
+		cout << "최고차항 입력하세용" << endl;
+		cin >> degree;
+		coef[0] = degree;
+		cout << "그 다음 차항부터 끝까지 입력하세영" << endl;
+		for (int i = 1; i <=degree; i++)
+		{
+			cin >> coef[i];
+		}
+	}
+	void display() {
+		for (int i = 0; i <=degree; i++)
+		{
+			if (coef[i] == 1)
+			{
+				cout << " X^" << degree-i << "      ";
+			}
+			else if(coef[i]!=0&&coef[i]!=1)
+			{
+				cout << coef[i] << " X^" <<degree- i << "    ";
+			}
+		}
+		cout << "\n";
+	}
+	void add(p f1, p f2) {
+		if (f1.degree > f2.degree) {
+			*this = f1;
+			for (int i = 0; i <= f2.degree; i++)
+			{
+				coef[i + (degree - f2.degree)] += f2.coef[i];
+			}
+		}
+		else
+		{
+			*this = f2;
+			for (int i = 0; i <= f1.degree; i++)
+			{
+				coef[i + (degree - f1.degree)] += f1.coef[i];
+			}
+		}
+	}
+	void sub(p f1, p f2) {
+		if (f1.degree >= f2.degree) {
+			*this = f1;
+			for (int i = 0; i <= f2.degree; i++)
+			{
+				coef[i + (degree - f2.degree)] -= f2.coef[i];
+			}
+		}
+		else
+		{
+			*this = f2;
+			for (int i = 0; i <= f1.degree; i++)
+			{
+				coef[i + (degree - f1.degree)] -= f1.coef[i];
+			}
+		}
+
+	}
+
+	void trim() {
+		for (int i = 0; i < degree; i++)
+		{
+			if (coef[i] != 0)
+			{
+				cout << coef[i] << " x^"<<i;
+			}
+		}
+	}
+};
+
+int main()
+{
+	p a, b, c;
+	a.read();
+	b.read();
+	c.sub(a, b);
+	c.display();
+	return 0;
+
+}
+
