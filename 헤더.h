@@ -1,15 +1,38 @@
-struct Location {
-	int row;
-	int col;
-	Location(int r = 0, int c = 0) {
-		row = r;
-		col = c;
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+class Node
+{
+	int data;
+	Node* link;
+public:
+	Node(int val = 0) : data(val), link ( NULL) {}
+	Node* getLink() {
+		return link;
 	}
-	bool isNeighbor(Location& p) {
-		return ((row == p.row && (col == p.col - 1 || col == p.col + 1)) ||
-			(col == p.col && (row == p.row - 1 || row == p.row + 1)));
+	void setLink(Node* next) {
+		link = next;
 	}
-	bool operator==(Location& p) {
-		return row == p.row && col == p.col;
+	void display() {
+		cout << data;
 	}
+	bool hasData(int val) {
+		return data == val;
+	}
+
+	void insertNext(Node* n) {
+		if (n != NULL) {
+			n->link = link;
+			link = n;
+		}
+	}
+	Node* removenext() {
+		Node* removed = link;
+		if (removed != NULL) {
+			link = removed->link;
+		}
+		return removed;
+	}
+
 };
